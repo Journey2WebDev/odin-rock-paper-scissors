@@ -1,0 +1,12 @@
+.rps {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.rps button {
+  font-size: 20pt;
+  font-weight: 700;
+  height: 150px;
+  width: 150px;
+}
