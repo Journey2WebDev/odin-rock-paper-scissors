@@ -1,11 +1,31 @@
-// Scoreboard initial value
-let roundNum = 1;
-document.getElementById("roundNum").textContent = roundNum;
+// Set initial values
+let roundNum = 0;
 let playerWins = 0;
-document.getElementById("numWinsPlayer").textContent = playerWins;
 let computerWins = 0;
-document.getElementById("numWinsCPU").textContent = computerWins;
-document.getElementById("gameWinner").textContent = "";
+let gameWinner = "";
+
+function resetGame(){
+  // Reset values
+  roundNum = 0;
+  playerWins = 0;
+  computerWins = 0;
+  gameWinner = "";
+
+  // Reset 'Game winner' on scoreboard 
+  document.getElementById("gameWinner").textContent = gameWinner;
+  updateScoreboard();
+}
+
+function updateScoreboard(){
+  document.getElementById("roundNum").textContent = roundNum;
+  document.getElementById("numWinsPlayer").textContent = playerWins;
+  document.getElementById("numWinsCPU").textContent = computerWins;
+  
+  // Check if all rounds played (best of 5)
+  if(roundNum == 5){
+    gameOver();
+  }
+}
 
 // Get random CPU move
 function getComputerMove(){
@@ -33,9 +53,10 @@ function getRoundWinner(playerMove, computerMove){
 }
 
 function playRound(playerMove, computerMove){
-  // Determine winner, or tie
+  // Determine round winner (player, cpu, or tie)
   let roundWinner = getRoundWinner(playerMove, computerMove);
 
+  // Update scoreboard variables
   switch(roundWinner){
     case "tie":
       break;
@@ -52,31 +73,28 @@ function playRound(playerMove, computerMove){
   updateScoreboard();
 }
 
-function updateScoreboard(){
-  document.getElementById("numWinsPlayer").textContent = playerWins;
-  document.getElementById("numWinsCPU").textContent = computerWins;
-  document.getElementById("roundNum").textContent = roundNum;
-
-  // Check if game won (best of 5)
-  if(roundNum > 5){
-    if(playerWins > computerWins){
-      document.getElementById("gameWinner").textContent = "Player";
-    } else {
-      document.getElementById("gameWinner").textContent = "Computer";
-    }
+function gameOver(){
+  // Declare winner on scoreboard
+  if(playerWins > computerWins){
+    document.getElementById("gameWinner").textContent = "Player";
+  } else {
+    document.getElementById("gameWinner").textContent = "Computer";
   }
+
+  // Remove Event Listener from RPS buttons
+  // rockBtn.removeEventListener('click', function(){
+  //   playRound("ROCK", getComputerMove());
+  // });
+
+  // paperBtn.removeEventListener('click', function(){
+  //   playRound("PAPER", getComputerMove());
+  // });
+  
+  // scissorsBtn.removeEventListener('click', function(){
+  //   playRound("SCISSORS", getComputerMove());
+  // });
 }
 
-function gameReset(){
-  roundNum=1;
-  playerWins=0;
-  computerWins=0;
-
-  document.getElementById("roundNum").textContent = 1;
-  document.getElementById("numWinsPlayer").textContent = 0;
-  document.getElementById("numWinsCPU").textContent = 0;
-  document.getElementById("gameWinner").textContent = "";
-}
 
 // RPS Button Events
 const rockBtn = document.getElementById("rockBtn");
@@ -95,7 +113,7 @@ scissorsBtn.addEventListener('click', function(){
 });
 
 // Game Reset Button Event
-const gameResetBtn = document.getElementById("gameResetBtn");
-gameResetBtn.addEventListener("click", function(){
-  gameReset();
+const resetGameBtn = document.getElementById("resetGameBtn");
+resetGameBtn.addEventListener("click", function(){
+  resetGame();
 });
