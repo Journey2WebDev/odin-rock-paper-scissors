@@ -1,6 +1,6 @@
 .rps {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
   margin: 20px;
 }
@@ -12,6 +12,10 @@
   width: 150px;
 }
 
+#rockBtn, #paperBtn, #scissorsBtn {
+  border-radius: 10%;
+}
+
 .reset {
   margin-top: 20px;
 }
@@ -19,4 +23,9 @@
 .reset button {
   height: 30px;
   width: 100px;
+}
+
+.tableColumn1 {
+  text-align: right;
+  margin-right: 20px;
 }

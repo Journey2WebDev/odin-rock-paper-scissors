@@ -1,14 +1,14 @@
 // Set initial values
-let roundNum = 0;
-let playerWins = 0;
-let computerWins = 0;
+let numWon = 0;
+let numLost = 0;
+let numTied = 0
 let gameWinner = "";
 
 function resetGame(){
   // Reset values
-  roundNum = 0;
-  playerWins = 0;
-  computerWins = 0;
+  numWon = 0;
+  numLost = 0;
+  numTied = 0
   gameWinner = "";
 
   // Reset 'Game winner' on scoreboard 
@@ -23,12 +23,12 @@ function resetGame(){
 }
 
 function updateScoreboard(){
-  document.getElementById("roundNum").textContent = roundNum;
-  document.getElementById("numWinsPlayer").textContent = playerWins;
-  document.getElementById("numWinsCPU").textContent = computerWins;
+  document.getElementById("numWon").textContent = numWon;
+  document.getElementById("numLost").textContent = numLost;
+  document.getElementById("numTied").textContent = numTied;
   
-  // Check if all rounds played (best of 5)
-  if(roundNum == 5){
+  // Check if either Player or Computer has 5 wins
+  if(numWon == 5 || numLost == 5){
     gameOver();
   }
 }
@@ -42,38 +42,37 @@ function getComputerMove(){
 
 function getRoundWinner(playerMove, computerMove){
   if(playerMove == computerMove){
-    return "tie"
+    return "tied"
   } else if (playerMove == "ROCK" && computerMove == "PAPER"){
-    return "computer"
+    return "lost"
   } else if (playerMove == "ROCK" && computerMove == "SCISSORS"){
-    return "player"
+    return "won"
   } else if (playerMove == "PAPER" && computerMove == "ROCK"){
-    return "player"
+    return "won"
   } else if (playerMove == "PAPER" && computerMove == "SCISSORS"){
-    return "computer"
+    return "lost"
   } else if (playerMove == "SCISSORS" && computerMove == "ROCK"){
-    return "computer"
+    return "lost"
   } else if (playerMove == "SCISSORS" && computerMove == "PAPER"){
-    return "player"
+    return "won"
   }
 }
 
 function playRound(playerMove, computerMove){
-  // Determine round winner (player, cpu, or tie)
+  // Determine round winner (won, lost, or tied)
   let roundWinner = getRoundWinner(playerMove, computerMove);
 
   // Update scoreboard variables
   switch(roundWinner){
-    case "tie":
+    case "won":
+      numWon++;
       break;
-    case "player":
-      playerWins++;
-      roundNum++;
+    case "lost":
+      numLost++;
       break;
-    case "computer":
-      computerWins++;
-      roundNum++;
-      break;
+    case "tied":
+      numTied++;
+      break;      
   }
 
   updateScoreboard();
@@ -81,7 +80,7 @@ function playRound(playerMove, computerMove){
 
 function gameOver(){
   // Declare winner on scoreboard
-  if(playerWins > computerWins){
+  if(numWon > numLost){
     document.getElementById("gameWinner").textContent = "Player";
   } else {
     document.getElementById("gameWinner").textContent = "Computer";
