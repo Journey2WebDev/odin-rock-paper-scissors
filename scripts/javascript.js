@@ -13,6 +13,12 @@ function resetGame(){
 
   // Reset 'Game winner' on scoreboard 
   document.getElementById("gameWinner").textContent = gameWinner;
+
+  // Add listeners back on RPS buttons
+  rockBtn.addEventListener('click', playRock);
+  paperBtn.addEventListener('click', playPaper);
+  scissorsBtn.addEventListener('click', playScissors);
+  
   updateScoreboard();
 }
 
@@ -82,38 +88,33 @@ function gameOver(){
   }
 
   // Remove Event Listener from RPS buttons
-  // rockBtn.removeEventListener('click', function(){
-  //   playRound("ROCK", getComputerMove());
-  // });
-
-  // paperBtn.removeEventListener('click', function(){
-  //   playRound("PAPER", getComputerMove());
-  // });
-  
-  // scissorsBtn.removeEventListener('click', function(){
-  //   playRound("SCISSORS", getComputerMove());
-  // });
+  rockBtn.removeEventListener('click', playRock);
+  paperBtn.removeEventListener('click', playPaper);
+  scissorsBtn.removeEventListener('click', playScissors);
 }
 
 
 // RPS Button Events
-const rockBtn = document.getElementById("rockBtn");
-rockBtn.addEventListener('click', function(){
+function playRock(){
   playRound("ROCK", getComputerMove());
-});
+};
+const rockBtn = document.getElementById("rockBtn");
+rockBtn.addEventListener('click', playRock);
 
-const paperBtn = document.getElementById("paperBtn");
-paperBtn.addEventListener('click', function(){
+function playPaper(){
   playRound("PAPER", getComputerMove());
-});
+};
+const paperBtn = document.getElementById("paperBtn");
+paperBtn.addEventListener('click', playPaper);
 
-const scissorsBtn = document.getElementById("scissorsBtn");
-scissorsBtn.addEventListener('click', function(){
+function playScissors(){
   playRound("SCISSORS", getComputerMove());
-});
+};
+const scissorsBtn = document.getElementById("scissorsBtn");
+scissorsBtn.addEventListener('click', playScissors);
 
 // Game Reset Button Event
 const resetGameBtn = document.getElementById("resetGameBtn");
-resetGameBtn.addEventListener("click", function(){
-  resetGame();
-});
+resetGameBtn.addEventListener("click", resetGame);
+
+
